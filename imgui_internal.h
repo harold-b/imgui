@@ -438,6 +438,11 @@ struct ImGuiContext
     int                     CaptureKeyboardNextFrame;
     char                    TempBuffer[1024*3+1];               // temporary text buffer
 
+    // Musashi
+#if IMGUI_USE_MUSASHI
+    Musashi::Engine*        _MusaEngine;
+#endif
+
     ImGuiContext()
     {
         Initialized = false;

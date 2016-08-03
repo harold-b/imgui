@@ -5611,6 +5611,11 @@ void ImGui::Image(ImTextureID user_texture_id, const ImVec2& size, const ImVec2&
     if (window->SkipItems)
         return;
 
+#if IMGUI_USE_MUSASHI
+    // Keep a reference to the texture so that it may not be deleted mid-frame
+    MusaImGui_RefTexture2D( user_texture_id );
+#endif
+
     ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size);
     if (border_col.w > 0.0f)
         bb.Max += ImVec2(2,2);
@@ -5641,6 +5646,11 @@ bool ImGui::ImageButton(ImTextureID user_texture_id, const ImVec2& size, const I
 
     ImGuiContext& g = *GImGui;
     const ImGuiStyle& style = g.Style;
+
+#if IMGUI_USE_MUSASHI
+    // Keep a reference to the texture so that it may not be deleted mid-frame
+    MusaImGui_RefTexture2D( user_texture_id );
+#endif
 
     // Default to using texture ID as ID. User can still push string/integer prefixes.
     // We could hash the size/uv to create a unique ID but that would prevent the user from animating UV.
